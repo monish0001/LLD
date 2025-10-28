@@ -86,5 +86,26 @@ int main()
     // Print receipt
     cart.printReceipt();
 
+    // save to database
+    cart.storeToDB();
+
     return 0;
 }
+
+/*
+ This code violates the Single Responsibility Principle (SRP).
+
+The ShoppingCart class has multiple responsibilities:
+   1. Managing the list of products in the cart.
+   2. Handling business logic for calculating the total.
+   3. Managing presentation logic by printing the receipt.
+   4. Managing persistence by storing data to the database.
+
+
+
+ To follow SRP:
+   - Separate these concerns into different classes:
+       • ShoppingCart → manages products only
+       • ReceiptPrinter → handles receipt display
+       • CartRepository → handles database storage
+*/
