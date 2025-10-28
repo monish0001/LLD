@@ -1,6 +1,4 @@
-#include <iostream>
-#include <vector>
-
+#include <bits/stdc++.h>
 using namespace std;
 
 class Product
@@ -11,83 +9,80 @@ private:
 
 public:
     Product(const string &name, double price)
-        : name(name), price(price)
     {
+        this->name = name;
+        this->price = price;
     }
-
-    string getName() const
+    string getName() { return name; }
+    double getPrice() { return price; }
+    void setName(const string &name) { this->name = name; }
+    void setPrice(double price) { this->price = price; }
+    void displayProduct()
     {
-        return name;
-    }
-
-    double getPrice() const
-    {
-        return price;
+        cout << "Product Name: " << name << ", Price: $" << price << endl;
     }
 };
 
-class ShoppingCart
+class shoppingCart
 {
 private:
-    vector<Product> products; // Store products in the cart
+    vector<Product> products;
 
 public:
-    // Add a product to the cart
-    void addProduct(const Product &product)
+    void addProduct(Product &product)
     {
         products.push_back(product);
     }
 
-    // Calculate the total price of the cart
     double calculateTotal()
     {
         double total = 0.0;
-        for (const auto &product : products)
+        for (auto &product : products)
         {
             total += product.getPrice();
         }
         return total;
     }
 
-    // Print a simple receipt
-    void printReceipt()
+    void printInvoice()
     {
-        cout << "Receipt:" << endl;
-        for (const auto &product : products)
+        cout << "Invoice:" << endl;
+        for (auto &product : products)
         {
-            cout << product.getName() << ": $" << product.getPrice() << endl;
+            product.displayProduct();
         }
-        cout << "Total: $" << calculateTotal() << endl;
+        cout << "Thank you for your purchase!" << endl;
     }
 
-    // Store the cart details to a database (placeholder function)
-    void storeToDB()
+    void storeToDatabase()
     {
-        cout << "Storing cart to database..." << endl;
-        // Implement database logic here
+        cout << "Storing cart details to the database..." << endl;
+        // Database storage logic would go here
+    }
+    void displayCart()
+    {
+        cout << "Shopping Cart Contents:" << endl;
+        for (auto &product : products)
+        {
+            product.displayProduct();
+        }
     }
 };
 
 int main()
 {
-    cout << "Single Responsibility Principle (SRP) states that a class should have only one reason to change." << endl;
+    Product p1("Laptop", 999.99);
+    Product p2("Smartphone", 499.99);
 
-    // Creating products
-    Product product1("Laptop", 999.99);
-    Product product2("Mouse", 29.99);
-    Product product3("Keyboard", 49.99);
+    shoppingCart cart;
+    cart.addProduct(p1);
+    cart.addProduct(p2);
 
-    // Creating shopping cart and adding products
-    ShoppingCart cart;
-    cart.addProduct(product1);
-    cart.addProduct(product2);
-    cart.addProduct(product3);
+    cout << "Total Amount: $" << cart.calculateTotal() << endl;
 
-    // Print receipt
-    cart.printReceipt();
-
-    // save to database
-    cart.storeToDB();
+    cart.printInvoice();
+    cart.storeToDatabase();
+    cart.displayCart();
 
     return 0;
 }
