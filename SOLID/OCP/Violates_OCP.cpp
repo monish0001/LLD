@@ -1,6 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// ocp means open for extension closed for modification
+
+// now new requirement comes that we need to save out data into a file also and mongodb, normalyy waht we will do is modify the existing code to add new functionality
+
 class Product
 {
 private:
@@ -74,10 +78,20 @@ public:
 class Database
 {
 public:
-    void storeCartDetails(ShoppingCart *cart)
+    void storeCartDetailsToSQL(ShoppingCart *cart)
     {
-        cout << "Storing cart details to the database..." << endl;
+        cout << "Storing cart details to the SQL database..." << endl;
         // Database storage logic would go here
+    }
+    void storeCartDetailsToMongoDB(ShoppingCart *cart)
+    {
+        cout << "Storing cart details to MongoDB..." << endl;
+        // MongoDB storage logic would go here
+    }
+    void storeCartDetailsToFile(ShoppingCart *cart)
+    {
+        cout << "Storing cart details to a file..." << endl;
+        // File storage logic would go here
     }
 };
 
@@ -95,23 +109,12 @@ int main()
     Invoice invoice(&cart);
     invoice.printInvoice();
     Database db;
-    db.storeCartDetails(&cart);
+    db.storeCartDetailsToSQL(&cart);
+    db.storeCartDetailsToMongoDB(&cart);
+    db.storeCartDetailsToFile(&cart);
 
     return 0;
 }
 
-/*
- This code follows the Single Responsibility Principle (SRP).
-
-Each class has only one reason to change:
-   - Product: Handles product data (name and price).
-   - ShoppingCart: Manages cart operations such as adding products and calculating total.
-   - Invoice: Responsible for printing the invoice.
-   - Database: Handles storing cart details to the database.
-
-By separating these responsibilities, changes in one area (like modifying how invoices are printed
-or how data is stored) do not affect other parts of the system. This makes the code more maintainable,
-modular, and easier to extend.
-*/
-
-SRP ka mtlb yr nhi hota ki 1 class 1 hi function hona chahiye, balki iska matlab hai ki ek class ka ek hi responsibility hona chahiye.Jaise ki upar wale code me ShoppingCart class sirf cart ke products ko manage kar rahi hai aur total calculate kar rahi hai, jabki Invoice class sirf invoice print karne ki zimmedari le rahi hai aur Database class sirf data store karne ki zimmedari le rahi hai.Is tarah se har class ka ek hi reason hota hai change hone ka, jo ki SRP ka main matlb hai.
+// but if you see we had to modify the Database class to add new functionality, which violates OCP
+// to follow OCP we can create an interface for storage and implement different storage classes for SQL, MongoDB and File
