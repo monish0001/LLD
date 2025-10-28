@@ -5,6 +5,7 @@ using namespace std;
 
 // now by OCP we will create separate classes for each storage type
 
+// OCP compliant code with the help of polymorphism(interface) and inheritance
 class Product
 {
 private:
