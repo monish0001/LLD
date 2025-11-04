@@ -127,3 +127,21 @@ int main()
 
     return 0;
 }
+
+// We achieve LSP here because:
+
+// 1. The 'Client' class depends only on the abstract base types
+//    (WithdrawableAccount and NonWithdrawableAccount), not on any specific subclass.
+
+// 2. In the code, objects of derived classes like SavingAccount, CurrentAccount,
+//    and FixedTermAccount are stored in vectors of their base class types.
+
+// 3. The 'Client' class calls 'deposit()' and 'withdraw()' methods
+//    on these base class pointers — and each subclass (SavingAccount, CurrentAccount,
+//    FixedTermAccount) can be used interchangeably *without altering the correctness
+//    of the Client's logic*.
+
+// 4. This means that anywhere a 'WithdrawableAccount*' or
+//    'NonWithdrawableAccount*' is expected, we can substitute an instance
+//    of any derived class (like SavingAccount or FixedTermAccount) and
+//    the program still behaves correctly.
